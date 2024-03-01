@@ -9,64 +9,70 @@
 """
 
 import tkinter
-import warnings
-import numpy as np
 from tkinter import END
 
-# Ignore warnings 
-warnings.simplefilter("ignore")
+def visualize_circuit(circuit , window):
+    try:
+        # --> Visualize circuit using visualize_transition
+        pass
+    except:
+        window.destroy()
 
-# Define window
+# --> Initialize the circuit
+
+
+# creating the canvas
 root = tkinter.Tk()
-root.title('SQC')
+root.title("Super Quant Coders")
 
-# Icon Set-UP
-root.geometry('225x305')
-root.resizable(0,0) # Resizing window is blocked
+# icon and scaling the window
+root.geometry("380x390")
+root.resizable(0,0)
 
-# Define Frames
-display_f = tkinter.LabelFrame(root) # Where the frames must go
-button_f = tkinter.LabelFrame(root, bg='black')
-display_f.pack()
-button_f.pack(fill='both', expand=True)
+# creating the display frames 
+display_screen = tkinter.LabelFrame(root , bd = 10 , bg = 'green')
+button_screen = tkinter.LabelFrame(root , bg = 'black')
 
-# Define Entry Bar
-display = tkinter.Entry(display_f, borderwidth=2, width = 150, font=('Arial', 32), bg='#1D2D12')
-display.pack(padx=3, pady=4)
+display_screen.pack(ipadx= 10 , ipady= 10)
+button_screen.pack(fill = 'both' , expand = True)
 
-# --> Function to initialize the circuit here
+# Designing the entry screen
+display = tkinter.Entry(display_screen , width = 120 , font = ('Arial' , 32) , bg = 'blue' , fg = 'white' , justify= 'left')
+display.pack(fill = 'both',expand= True,padx= 2 , pady= 2 )
 
-def display_gates(input_gate):
-    display.insert(END, input_gate)
+# Display the gate visiualization
+def gate_display(input_gate):
+    display.insert(END , input_gate)
 
+
+# clear functionality 
 def clear_gates():
-    display.delete(0, END)
-    # --> Re-Initialize the circuit here
+    display.delete(0 ,END)
+    # --> Re-Initialising the cicuits to be used again
 
-# --> Give command to the buttons
-# Define gates like X Y Z and H
-x_gate = tkinter.Button(button_f, font=('Arial', 18), bg='#0fe43d', text='X')
-y_gate = tkinter.Button(button_f, font=('Arial', 18), bg='#0fe43d', text='Y')
-z_gate = tkinter.Button(button_f, font=('Arial', 18), bg='#0fe43d', text='Z')
-h_gate = tkinter.Button(button_f, font=('Arial', 18), bg='#0fe43d', text='H', command=lambda:[display_gates('H')])
-# Put the buttons in the button_frame
-x_gate.grid(row=0, column=0, columnspan=6, sticky='WE')
-y_gate.grid(row=0, column=6, columnspan=6, sticky='WE')
-z_gate.grid(row=0, column=12, columnspan=6, sticky='WE')
-h_gate.grid(row=1, column=0, columnspan=18, sticky='WE')
+# creating buttons
 
-#Define the QUIT button
-quit = tkinter.Button(button_f, font=('Arial', 18), bg='#0fe43d', text='QUIT', command=root.destroy)
-#Define the VISUALIZE button
-visualize = tkinter.Button(button_f, font=('Arial', 18), bg='#0fe43d', text='VISUALIZE') # --> Add command to visulaize
-#Define the CLEAR button
-clear = tkinter.Button(button_f, font=('Arial', 18), bg='#0fe43d', text='CLEAR', command=lambda:[clear_gates()])
-# Put the buttons in the frame
-quit.grid(row=3, column=0, columnspan=18, sticky='WE') # West to Ease ==> WE
-visualize.grid(row=4, column=0, columnspan=18, sticky='WE')
-clear.grid(row=5, column=0, columnspan=18, sticky='WE')
+x_gate = tkinter.Button(button_screen , bg = "pink" , fg = "red" , text='X', font = ('arial' , 15), command = lambda : [gate_display("X")])
+y_gate = tkinter.Button(button_screen , bg = 'pink' , foreground= 'red' , text = 'Y' , font = ('arial' , 15), command= lambda : [gate_display("Y")])
+z_gate = tkinter.Button(button_screen , bg = 'pink' , foreground= 'red' , text = 'Z' , font = ('arial' , 15), command= lambda : [gate_display("Z")])
+h_gate = tkinter.Button(button_screen , bg = 'pink' , fg = 'red' , text = 'H' , font = ('arial' , 15), command= lambda : [gate_display("H")])
+quit_button = tkinter.Button(button_screen , bg = 'red' , fg = 'white' , text = 'Quit' , font = ('arial' , 15) , command= lambda : root.destroy())
+visualize = tkinter.Button(button_screen , bg = 'red' , fg = 'white' , text = 'Visualize' , font = ('arial' , 15)) # --> Add the command lambda to visulize transition of the circuit in root
+clear = tkinter.Button(button_screen , bg = 'red' , fg = 'white' , text = 'Clear' , font = ('arial' , 15), command= lambda :clear_gates())
+sqc = tkinter.Button(button_screen , bg = 'yellow', fg= 'blue' , text= 'Super Quant Coders' , font= ('algerian' , 20) )
 
-# Run the tkinter loop
+# we can use gate.config state = DISABLE to disable buttons if 10 buttons are pressed
+
+# Displayiing the buttons in the botton_screen frame
+x_gate.grid(row = 0 , column = 0 , ipadx= 45 , ipady= 20 , padx= 1 , pady= 1 , sticky= 'WE')
+y_gate.grid(row = 0 , column= 1 , ipadx= 45 , ipady= 20, padx= 1 , pady= 1, sticky= 'WE')
+z_gate.grid(row = 0 , column= 2 , ipadx= 45 , ipady= 20 , padx= 1 , pady= 1, sticky= 'WE' )
+h_gate.grid(  column= 0, ipadx= 50  , padx= 1, pady= 1 , sticky= "NSWE" , rowspan= 3)
+quit_button.grid(row = 1 , column= 1, columnspan= 2 , sticky= "NWE")
+visualize.grid(row = 2 , column= 1, columnspan= 2 , sticky= "NWE" )
+clear.grid(row = 3 , column= 1, columnspan= 2 , sticky= "NWE")
+sqc.grid(row = 4 , column= 0 , columnspan= 3 , sticky= "WE" ,ipady= 20) 
+
 root.mainloop()
 
 """
