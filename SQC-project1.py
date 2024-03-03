@@ -1,24 +1,27 @@
-"""
-    Welcome to SQC - Quantum Computing Club NIT Jalandhar
-    
-    A warm welcome to this workshop on quantum computing! We are thrilled to have each of you on board for this exciting exploration into the fascinating world of quantum technology.
-
-    Get ready to embark on a journey that will challenge your understanding of computation and open doors to a realm where quantum bits defy classical logic.
-
-    Let us together build a project which will help in visualizing Quantum Gates.
-"""
-
 import tkinter
 from tkinter import END
+import qiskit
+from qiskit.visualization import visualize_transition as vs
+
+
+
+def initialize_circuits():
+    global circuits
+    circuits  = qiskit.QuantumCircuit(1,1)
+    # circuits.x(0)
+    # circuits.measure_all(0,0)
+    
+
+initialize_circuits()
 
 def visualize_circuit(circuit , window):
     try:
-        # --> Visualize circuit using visualize_transition
-        pass
+        vs(circuit, window)
     except:
         window.destroy()
 
-# --> Initialize the circuit
+
+
 
 
 # creating the canvas
@@ -40,7 +43,6 @@ button_screen.pack(fill = 'both' , expand = True)
 display = tkinter.Entry(display_screen , width = 120 , font = ('Arial' , 32) , bg = 'blue' , fg = 'white' , justify= 'left')
 display.pack(fill = 'both',expand= True,padx= 2 , pady= 2 )
 
-# Display the gate visiualization
 def gate_display(input_gate):
     display.insert(END , input_gate)
 
@@ -48,16 +50,16 @@ def gate_display(input_gate):
 # clear functionality 
 def clear_gates():
     display.delete(0 ,END)
-    # --> Re-Initialising the cicuits to be used again
+    initialize_circuits() #reititialising the cicuits to be used again
 
 # creating buttons
 
-x_gate = tkinter.Button(button_screen , bg = "pink" , fg = "red" , text='X', font = ('arial' , 15), command = lambda : [gate_display("X")])
-y_gate = tkinter.Button(button_screen , bg = 'pink' , foreground= 'red' , text = 'Y' , font = ('arial' , 15), command= lambda : [gate_display("Y")])
-z_gate = tkinter.Button(button_screen , bg = 'pink' , foreground= 'red' , text = 'Z' , font = ('arial' , 15), command= lambda : [gate_display("Z")])
-h_gate = tkinter.Button(button_screen , bg = 'pink' , fg = 'red' , text = 'H' , font = ('arial' , 15), command= lambda : [gate_display("H")])
+x_gate = tkinter.Button(button_screen , bg = "pink" , fg = "red" , text='X', font = ('arial' , 15), command = lambda : [gate_display("X") , circuits.x(0)])
+y_gate = tkinter.Button(button_screen , bg = 'pink' , foreground= 'red' , text = 'Y' , font = ('arial' , 15), command= lambda : [gate_display("Y") , circuits.y(0)])
+z_gate = tkinter.Button(button_screen , bg = 'pink' , foreground= 'red' , text = 'Z' , font = ('arial' , 15), command= lambda : [gate_display("Z") , circuits.z(0)])
+h_gate = tkinter.Button(button_screen , bg = 'pink' , fg = 'red' , text = 'H' , font = ('arial' , 15), command= lambda : [gate_display("H") , circuits.h(0)])
 quit_button = tkinter.Button(button_screen , bg = 'red' , fg = 'white' , text = 'Quit' , font = ('arial' , 15) , command= lambda : root.destroy())
-visualize = tkinter.Button(button_screen , bg = 'red' , fg = 'white' , text = 'Visualize' , font = ('arial' , 15)) # --> Add the command lambda to visulize transition of the circuit in root
+visualize = tkinter.Button(button_screen , bg = 'red' , fg = 'white' , text = 'Visualize' , font = ('arial' , 15), command = lambda: visualize_circuit(circuits, root))
 clear = tkinter.Button(button_screen , bg = 'red' , fg = 'white' , text = 'Clear' , font = ('arial' , 15), command= lambda :clear_gates())
 sqc = tkinter.Button(button_screen , bg = 'yellow', fg= 'blue' , text= 'Super Quant Coders' , font= ('algerian' , 20) )
 
@@ -73,10 +75,16 @@ visualize.grid(row = 2 , column= 1, columnspan= 2 , sticky= "NWE" )
 clear.grid(row = 3 , column= 1, columnspan= 2 , sticky= "NWE")
 sqc.grid(row = 4 , column= 0 , columnspan= 3 , sticky= "WE" ,ipady= 20) 
 
+
+# circuits  = qiskit.QuantumCircuit(1,1)
+# circuits.h(0)
+# circuits.z(0)
+# vs(circuits)
+
+# initializing circuit
+# vs(circuits)
+
+
+
+
 root.mainloop()
-
-"""
-    Thank You for showing your enthusiasm.
-
-    For more updates follow us on instagram @sqc_nitj
-"""
